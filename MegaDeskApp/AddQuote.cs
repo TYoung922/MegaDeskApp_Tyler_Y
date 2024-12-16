@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MegaDeskApp;
 
 namespace MegaDeskApp
 {
     public partial class AddQuote : Form
     {
+        private DeskQuote deskQuote = new DeskQuote();
         bool activeErrors = true;
         public AddQuote()
         {
@@ -36,103 +38,159 @@ namespace MegaDeskApp
             return_to_main();
         }
 
-        private void Check_Width(object sender, EventArgs e)
+        private void Submit_Order(object sender, EventArgs e)
         {
-            if (int.TryParse(dWidth.Text, out int widthNumb))
-            {
-                if (widthNumb >= 12 && widthNumb <= 96)
-                {
-                    widthError.SetError(dWidth, "");
-                    activeErrors = false;
-                }
-                else 
-                {
-                    widthError.SetError(dWidth, "Width must be between 12 and 96 inches");
-                    activeErrors = true;
-                }
-            }
-            else
-            {
-                widthError.SetError(dWidth, "Please enter a valid number");
-            }
+            if (WidthBox.Text.Length == 0 || DepthBox.Text.Length == 0 || DrawerInput.Text.Length == 0) return;
+            int surfaceArea = deskQuote.desk.getSurfaceArea();
+            string orderDate = DateTime.Now.ToShortDateString();
+            deskQuote.orderDate = orderDate;
+            int shipping = deskQuote.desk.ShippingDays;
+            DisplayQuote frm = new DisplayQuote(deskQuote);
+            frm.Show();
+            Close();
         }
 
-        private void Check_Depth(object sender, EventArgs e)
+        private void WidthBox_Validating(object sender, CancelEventArgs e)
         {
-            if (int.TryParse(dDepth.Text, out int depthNumb))
+            TextBox input = (TextBox)sender;
+            try
             {
-                if (depthNumb >= 12 && depthNumb <= 96)
+                int newWidth;
+                bool isNum = Int32.TryParse(input.Text, out newWidth);
+                if (isNum)
                 {
-                    widthError.SetError(dDepth, "");
-                    activeErrors = false;
+                    deskQuote.desk.Width = newWidth;
+                    widthError.SetError(this.WidthBox, "");
                 }
                 else
                 {
-                    widthError.SetError(dDepth, "Depth must be between 12 and 48 inches");
-                    activeErrors = true;
+                    widthError.SetError(this.WidthBox, "Enter a number.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                widthError.SetError(dDepth, "Please enter a valid number");
-                activeErrors = true;
+                widthError.SetError(this.WidthBox, "Input must be between 24 and 96 inches.");
             }
         }
 
-        private void Drawer_Check(object sender, EventArgs e)
+        private void NameBox_Validation(object sender, CancelEventArgs e)
         {
-            if (numbDrawers.SelectedIndex == -1)
+            TextBox input = (TextBox)sender;
+            try
             {
-                widthError.SetError(numbDrawers, "Please select the number of drawers you want");
-                activeErrors = true;
+                string newName = input.Text;
+                bool isString = String.IsNullOrEmpty(input.Text);
+                if (!isString && newName.Length > 1)
+                {
+                    deskQuote.customerName = newName;
+                    widthError.SetError(this.NameBox, "");
+                }
+                else
+                {
+                    widthError.SetError(this.NameBox, "Name must be more than 1 character");
+                }
+                
             }
-            else { widthError.SetError(numbDrawers, ""); activeErrors = false; }
+            catch (Exception ex)
+            {
+                widthError.SetError(this.NameBox, "Please enter your name");
+            }
         }
 
-        private void Material_Check(object sender, EventArgs e)
+        private void Depth_validation(object sender, CancelEventArgs e)
         {
-            if (material.SelectedIndex == -1)
+            TextBox input = (TextBox)sender;
+            try
             {
-                widthError.SetError(material, "Please select a material");
-                activeErrors = true;
+                int newDepth;
+                bool isNum = Int32.TryParse(input.Text, out newDepth);
+                if (isNum)
+                {
+                    deskQuote.desk.Depth = newDepth;
+                    widthError.SetError(this.DepthBox, "");
+                }
+                else
+                {
+                    widthError.SetError(this.DepthBox, "Enter a number.");
+                }
             }
-            else { widthError.SetError(material, ""); activeErrors = false; }
+            catch (Exception ex)
+            {
+                widthError.SetError(this.DepthBox, "Input must be between 12 and 48 inches.");
+            }
         }
 
-        private void Ship_Check(object sender, EventArgs e)
+        private void Drawer_Validation(object sender, CancelEventArgs e)
         {
-            if (shipping.SelectedIndex == -1)
+            ComboBox input = (ComboBox)sender;
+            
+            try
             {
-                widthError.SetError(shipping, "Please select a shipping option");
-                activeErrors = true;
+                int newDrawer;
+                if (input.SelectedIndex == -1)
+                {
+                    widthError.SetError(this.DrawerInput, "Please select the number of drawers");
+                }
+                else
+                {
+                    widthError.SetError(this.DrawerInput, "");
+                    string selection = input.SelectedItem.ToString();
+                    newDrawer = int.Parse(selection);
+                    deskQuote.desk.DrawerNumber = newDrawer;
+                }
             }
-            else { widthError.SetError(shipping, ""); activeErrors = false; }
+            catch (Exception ex)
+            {
+                widthError.SetError(this.DrawerInput, "Please make a selection");
+            }
         }
 
-        private void Name_Check(object sender, EventArgs e)
+        private void Material_Validation(object sender, CancelEventArgs e)
         {
-            if (cusName.Text.Length < 2)
+            ComboBox input = (ComboBox)sender;
+
+            try
             {
-                widthError.SetError(cusName, "Please enter a name of at least 2 characters");
-                activeErrors = true;
+                string newMaterial;
+                if (input.SelectedIndex == -1)
+                {
+                    widthError.SetError(this.MaterialComboBox, "Please select a material");
+                }
+                else
+                {
+                    widthError.SetError(this.MaterialComboBox, "");
+                    newMaterial = input.SelectedItem.ToString();
+                    deskQuote.desk.Material = newMaterial;
+                }
             }
-            else { widthError.SetError(cusName, ""); activeErrors = false; }
+            catch (Exception ex)
+            {
+                widthError.SetError(this.MaterialComboBox, "Please make a selection");
+            }
         }
 
-        private void Submit_Order(object sender, EventArgs e)
+        private void Shipping_validation(object sender, CancelEventArgs e)
         {
-            if (activeErrors)
-            { MessageBox.Show("Please fill in all fields"); }
-            else 
-            {
-                //This is where subit stuff will go
+            ComboBox input = (ComboBox)sender;
 
-                cusName.Clear();
-                dWidth.Clear();
-                dDepth.Clear();
-                numbDrawers.SelectedIndex = -1;
-                material.SelectedIndex = -1;
-                shipping.SelectedIndex = -1;
+            try
+            {
+                int newShipping;
+                if (input.SelectedIndex == -1)
+                {
+                    widthError.SetError(this.ShippingComboBox, "Please make a shipping selection");
+                }
+                else
+                {
+                    widthError.SetError(this.ShippingComboBox, "");
+                    string selection = input.SelectedItem.ToString();
+                    newShipping = int.Parse(selection);
+                    deskQuote.desk.ShippingDays = newShipping;
+                }
+            }
+            catch (Exception ex)
+            {
+                widthError.SetError(this.ShippingComboBox, "Please make a selection");
             }
         }
     }

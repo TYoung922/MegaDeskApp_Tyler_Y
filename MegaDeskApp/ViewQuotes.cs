@@ -28,5 +28,11 @@ namespace MegaDeskApp
         {
             return_to_main();
         }
+
+        private void ViewQuotes_Load(object sender, EventArgs e)
+        {
+            DateLabel.Text = DateTime.Now.ToString();
+            WidthReq.Text = "Your width must be between 24 and 96 inches.";
+        }
     }
 }

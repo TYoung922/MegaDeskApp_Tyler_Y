@@ -43,12 +43,12 @@
             this.widthDisclaim = new System.Windows.Forms.Label();
             this.depthDisclaim = new System.Windows.Forms.Label();
             this.shipDiscalim = new System.Windows.Forms.Label();
-            this.cusName = new System.Windows.Forms.TextBox();
-            this.dWidth = new System.Windows.Forms.TextBox();
-            this.dDepth = new System.Windows.Forms.TextBox();
-            this.numbDrawers = new System.Windows.Forms.ComboBox();
-            this.material = new System.Windows.Forms.ComboBox();
-            this.shipping = new System.Windows.Forms.ComboBox();
+            this.NameBox = new System.Windows.Forms.TextBox();
+            this.WidthBox = new System.Windows.Forms.TextBox();
+            this.DepthBox = new System.Windows.Forms.TextBox();
+            this.DrawerInput = new System.Windows.Forms.ComboBox();
+            this.MaterialComboBox = new System.Windows.Forms.ComboBox();
+            this.ShippingComboBox = new System.Windows.Forms.ComboBox();
             this.widthError = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.widthError)).BeginInit();
             this.SuspendLayout();
@@ -195,34 +195,34 @@
             this.shipDiscalim.TabIndex = 13;
             this.shipDiscalim.Text = "Express 3 days to standard 7 days";
             // 
-            // cusName
+            // NameBox
             // 
-            this.cusName.Location = new System.Drawing.Point(301, 137);
-            this.cusName.Name = "cusName";
-            this.cusName.Size = new System.Drawing.Size(143, 20);
-            this.cusName.TabIndex = 14;
-            this.cusName.Leave += new System.EventHandler(this.Name_Check);
+            this.NameBox.Location = new System.Drawing.Point(301, 137);
+            this.NameBox.Name = "NameBox";
+            this.NameBox.Size = new System.Drawing.Size(143, 20);
+            this.NameBox.TabIndex = 14;
+            this.NameBox.Validating += new System.ComponentModel.CancelEventHandler(this.NameBox_Validation);
             // 
-            // dWidth
+            // WidthBox
             // 
-            this.dWidth.Location = new System.Drawing.Point(301, 177);
-            this.dWidth.Name = "dWidth";
-            this.dWidth.Size = new System.Drawing.Size(143, 20);
-            this.dWidth.TabIndex = 15;
-            this.dWidth.Leave += new System.EventHandler(this.Check_Width);
+            this.WidthBox.Location = new System.Drawing.Point(301, 177);
+            this.WidthBox.Name = "WidthBox";
+            this.WidthBox.Size = new System.Drawing.Size(143, 20);
+            this.WidthBox.TabIndex = 15;
+            this.WidthBox.Validating += new System.ComponentModel.CancelEventHandler(this.WidthBox_Validating);
             // 
-            // dDepth
+            // DepthBox
             // 
-            this.dDepth.Location = new System.Drawing.Point(301, 226);
-            this.dDepth.Name = "dDepth";
-            this.dDepth.Size = new System.Drawing.Size(143, 20);
-            this.dDepth.TabIndex = 16;
-            this.dDepth.Leave += new System.EventHandler(this.Check_Depth);
+            this.DepthBox.Location = new System.Drawing.Point(301, 226);
+            this.DepthBox.Name = "DepthBox";
+            this.DepthBox.Size = new System.Drawing.Size(143, 20);
+            this.DepthBox.TabIndex = 16;
+            this.DepthBox.Validating += new System.ComponentModel.CancelEventHandler(this.Depth_validation);
             // 
-            // numbDrawers
+            // DrawerInput
             // 
-            this.numbDrawers.FormattingEnabled = true;
-            this.numbDrawers.Items.AddRange(new object[] {
+            this.DrawerInput.FormattingEnabled = true;
+            this.DrawerInput.Items.AddRange(new object[] {
             "0",
             "1",
             "2",
@@ -231,40 +231,40 @@
             "5",
             "6",
             "7"});
-            this.numbDrawers.Location = new System.Drawing.Point(301, 272);
-            this.numbDrawers.Name = "numbDrawers";
-            this.numbDrawers.Size = new System.Drawing.Size(143, 21);
-            this.numbDrawers.TabIndex = 17;
-            this.numbDrawers.Leave += new System.EventHandler(this.Drawer_Check);
+            this.DrawerInput.Location = new System.Drawing.Point(301, 272);
+            this.DrawerInput.Name = "DrawerInput";
+            this.DrawerInput.Size = new System.Drawing.Size(143, 21);
+            this.DrawerInput.TabIndex = 17;
+            this.DrawerInput.Validating += new System.ComponentModel.CancelEventHandler(this.Drawer_Validation);
             // 
-            // material
+            // MaterialComboBox
             // 
-            this.material.FormattingEnabled = true;
-            this.material.Items.AddRange(new object[] {
+            this.MaterialComboBox.FormattingEnabled = true;
+            this.MaterialComboBox.Items.AddRange(new object[] {
             "Pine",
             "Laminate",
             "Veneer",
             "Oak",
             "Rosewood"});
-            this.material.Location = new System.Drawing.Point(301, 314);
-            this.material.Name = "material";
-            this.material.Size = new System.Drawing.Size(143, 21);
-            this.material.TabIndex = 18;
-            this.material.Leave += new System.EventHandler(this.Material_Check);
+            this.MaterialComboBox.Location = new System.Drawing.Point(301, 314);
+            this.MaterialComboBox.Name = "MaterialComboBox";
+            this.MaterialComboBox.Size = new System.Drawing.Size(143, 21);
+            this.MaterialComboBox.TabIndex = 18;
+            this.MaterialComboBox.Validating += new System.ComponentModel.CancelEventHandler(this.Material_Validation);
             // 
-            // shipping
+            // ShippingComboBox
             // 
-            this.shipping.FormattingEnabled = true;
-            this.shipping.Items.AddRange(new object[] {
+            this.ShippingComboBox.FormattingEnabled = true;
+            this.ShippingComboBox.Items.AddRange(new object[] {
             "3",
             "5",
             "7",
             "14"});
-            this.shipping.Location = new System.Drawing.Point(301, 354);
-            this.shipping.Name = "shipping";
-            this.shipping.Size = new System.Drawing.Size(143, 21);
-            this.shipping.TabIndex = 19;
-            this.shipping.Leave += new System.EventHandler(this.Ship_Check);
+            this.ShippingComboBox.Location = new System.Drawing.Point(301, 354);
+            this.ShippingComboBox.Name = "ShippingComboBox";
+            this.ShippingComboBox.Size = new System.Drawing.Size(143, 21);
+            this.ShippingComboBox.TabIndex = 19;
+            this.ShippingComboBox.Validating += new System.ComponentModel.CancelEventHandler(this.Shipping_validation);
             // 
             // widthError
             // 
@@ -275,12 +275,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 506);
-            this.Controls.Add(this.shipping);
-            this.Controls.Add(this.material);
-            this.Controls.Add(this.numbDrawers);
-            this.Controls.Add(this.dDepth);
-            this.Controls.Add(this.dWidth);
-            this.Controls.Add(this.cusName);
+            this.Controls.Add(this.ShippingComboBox);
+            this.Controls.Add(this.MaterialComboBox);
+            this.Controls.Add(this.DrawerInput);
+            this.Controls.Add(this.DepthBox);
+            this.Controls.Add(this.WidthBox);
+            this.Controls.Add(this.NameBox);
             this.Controls.Add(this.shipDiscalim);
             this.Controls.Add(this.depthDisclaim);
             this.Controls.Add(this.widthDisclaim);
@@ -319,12 +319,12 @@
         private System.Windows.Forms.Label widthDisclaim;
         private System.Windows.Forms.Label depthDisclaim;
         private System.Windows.Forms.Label shipDiscalim;
-        private System.Windows.Forms.TextBox cusName;
-        private System.Windows.Forms.TextBox dWidth;
-        private System.Windows.Forms.TextBox dDepth;
-        private System.Windows.Forms.ComboBox numbDrawers;
-        private System.Windows.Forms.ComboBox material;
-        private System.Windows.Forms.ComboBox shipping;
+        private System.Windows.Forms.TextBox NameBox;
+        private System.Windows.Forms.TextBox WidthBox;
+        private System.Windows.Forms.TextBox DepthBox;
+        private System.Windows.Forms.ComboBox DrawerInput;
+        private System.Windows.Forms.ComboBox MaterialComboBox;
+        private System.Windows.Forms.ComboBox ShippingComboBox;
         private System.Windows.Forms.ErrorProvider widthError;
     }
 }
